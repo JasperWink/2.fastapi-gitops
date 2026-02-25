@@ -64,15 +64,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # ADDED: Set up Docker Buildx (matches your screenshot)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
+        # Remove the next line if you want to push on regular commits, not just releases
         if: github.event_name == 'release'
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
+      # RENAMED to match your screenshot
+      - name: Prepare Docker image tags
         id: meta
         uses: docker/metadata-action@v5
         with:
@@ -90,7 +96,8 @@ jobs:
         with:
           context: .
           file: docker/Dockerfile
-          # Only push if the workflow was triggered by a release
+          # Change this to `push: true` if you want it to push on every commit
           push: ${{ github.event_name == 'release' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  
