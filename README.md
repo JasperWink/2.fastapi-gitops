@@ -3,7 +3,7 @@ GitOps with FastAPI
 
 ***University of Amsterdam***
 
-# 1. Introduction 
+# 1. Introduction
 
 In this tutorial, we use GitOps practices with FastAPI, including CI/CD pipelines, code quality tools, and automated testing.
 
